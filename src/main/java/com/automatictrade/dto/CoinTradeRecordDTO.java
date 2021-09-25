@@ -1,56 +1,73 @@
 package com.automatictrade.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
+@Getter
 @Table(name = "coin_trade")
 @AllArgsConstructor
 @NoArgsConstructor
 public class CoinTradeRecordDTO {
 
     @EmbeddedId
+    @JsonUnwrapped
     private CoinTradeRecordDTOPK coinTradeRecordDTOPK;
 
     @Column(name="ask_bid")
+    @JsonProperty("ab")
     private String tradeType;
 
     @Column(name="stream_type")
+    @JsonProperty("st")
     private String streamType;
 
     @Column(name="trade_volume")
+    @JsonProperty("tv")
     private Double tradeVolume;
 
     @Column(name="change_type")
+    @JsonProperty("c")
     private String changeType;
 
     @Column(name="data_type")
+    @JsonProperty("ty")
     private String dataType;
 
     @Column(name="trade_time")
-    private LocalTime tradeTime;
+    @JsonProperty("ttm")
+    private String tradeTime;
 
     @Column(name="change_price")
+    @JsonProperty("cp")
     private Double changePrice;
 
     @Column(name="trade_date")
-    private LocalDate tradeDate;
+    @JsonProperty("td")
+    private String tradeDate;
 
     @Column(name="trade_timestamp")
-    private LocalDateTime tradeTimestamp;
+    @JsonProperty("ttms")
+    private Long tradeTimestamp;
 
     @Column(name="timestamp")
-    private LocalDateTime timestamp;
+    @JsonProperty("tms")
+    private Long timestamp;
 
     @Column(name="trade_price")
+    @JsonProperty("tp")
     private Double tradePrice;
 
     @Column(name="prev_closing_price")
+    @JsonProperty("pcp")
     private Double prevClosingPrice;
 
 }
