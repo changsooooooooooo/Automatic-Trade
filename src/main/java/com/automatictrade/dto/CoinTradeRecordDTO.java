@@ -1,26 +1,21 @@
 package com.automatictrade.dto;
 
-
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
-@Table(name = "coin-trade")
+@Table(name = "coin_trade")
 @AllArgsConstructor
 @NoArgsConstructor
 public class CoinTradeRecordDTO {
 
-    @Id
-    @Column(name="sequential_id")
-    private String sequentialID;
-
-    @Column(name="code")
-    private String code;
+    @EmbeddedId
+    private CoinTradeRecordDTOPK coinTradeRecordDTOPK;
 
     @Column(name="ask_bid")
     private String tradeType;
@@ -38,19 +33,19 @@ public class CoinTradeRecordDTO {
     private String dataType;
 
     @Column(name="trade_time")
-    private
+    private LocalTime tradeTime;
 
     @Column(name="change_price")
     private Double changePrice;
 
     @Column(name="trade_date")
-    private
+    private LocalDate tradeDate;
 
     @Column(name="trade_timestamp")
-    private
+    private LocalDateTime tradeTimestamp;
 
     @Column(name="timestamp")
-    private
+    private LocalDateTime timestamp;
 
     @Column(name="trade_price")
     private Double tradePrice;
