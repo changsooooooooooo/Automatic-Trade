@@ -6,8 +6,6 @@ import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.test.web.reactive.server.EntityExchangeResult;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @WebFluxTest(controllers = UserCombController.class)
 class UserCombControllerTest {
 

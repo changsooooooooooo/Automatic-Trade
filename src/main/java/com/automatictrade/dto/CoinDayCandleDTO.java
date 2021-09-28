@@ -1,24 +1,52 @@
 package com.automatictrade.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class CoinDayCandleDTO {
 
-    private final String market;
-    private final String candleDateTimeUTC;
-    private final String candleDateTimeKST;
-    private final int openingPrice;
-    private final int highPrice;
-    private final int lowPrice;
-    private final int tradePrice;
-    private final int timestamp;
-    private final Double candleAccTradePrice;
-    private final Double candleAccTradeVolume;
-    private final int prevClosingPrice;
-    private final int changePrice;
-    private final Double changeRate;
+    @JsonProperty("market")
+    private String market;
+
+    @JsonProperty("candle_date_time_utc")
+    private String candleDateTimeUTC;
+
+    @JsonProperty("candle_date_time_kst")
+    private String candleDateTimeKST;
+
+    @JsonProperty("opening_price")
+    private Long openingPrice;
+
+    @JsonProperty("high_price")
+    private Long highPrice;
+
+    @JsonProperty("low_price")
+    private Long lowPrice;
+
+    @JsonProperty("trade_price")
+    private Long tradePrice;
+
+    @JsonProperty("timestamp")
+    private Long timestamp;
+
+    @JsonProperty("candle_acc_trade_price")
+    private Double candleAccTradePrice;
+
+    @JsonProperty("candle_acc_trade_volume")
+    private Double candleAccTradeVolume;
+
+    @JsonProperty("prev_closing_price")
+    private Long prevClosingPrice;
+
+    @JsonProperty("change_price")
+    private Long changePrice;
+
+    @JsonProperty("change_rate")
+    private Double changeRate;
 
 }
