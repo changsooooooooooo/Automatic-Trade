@@ -17,7 +17,6 @@ import reactor.core.publisher.Mono;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,17 +27,15 @@ public class RecordLogic {
 
     private final CoinDBRepository coinDBRepository;
 
-    public List<String> getBigDiffCand(final int count) {
+    public Flux<String> getBigDiffCand(final int count) {
         WebClient webClient = WebClient.create(candleUrl);
         List<String> coinList = coinDBRepository.findDistinctCoins();
         return Flux.fromIterable(coinList)
                 .map(coin->getDayCandle(coin, webClient))
                 .flatMap(str->strToCandleDTO(str))
                 .sort(Comparator.comparing(dto->dto.getLowPrice()-dto.getHighPrice()))
-                .map(dto->dto.getMarket())
-                .toStream()
-                .limit(count)
-                .collect(Collectors.toList());
+                .take(count)
+                .map(dto->dto.getMarket());
     }
 
     public Mono<String> getDayCandle(final String coinName, final WebClient webClient) {
@@ -47,7 +44,8 @@ public class RecordLogic {
                         uriBuilder.queryParam("market", coinName)
                                 .build())
                 .accept(MediaType.APPLICATION_JSON)
-                .exchangeToMono(response->response.bodyToMono(String.class));
+                .exchangeToMono(response->response.bodyToMono(String.class))
+                .log();
     }
 
     public Mono<CoinDayCandleDTO> strToCandleDTO(final Mono<String> clientContent) {
