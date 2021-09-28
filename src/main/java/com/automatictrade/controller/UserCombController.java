@@ -1,6 +1,7 @@
 package com.automatictrade.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,9 +14,12 @@ import reactor.core.publisher.Mono;
 @RequestMapping(value="/usercomb")
 public class UserCombController {
 
+    @Value("${candle.url}")
+    private String url;
+
     @GetMapping("/bigdiff")
     public Mono<String> recordBigDiffCoins(@RequestParam int count){
-        WebClient webClient = WebClient.create("https://api.upbit.com/v1/candles/days");
+        WebClient webClient = WebClient.create(url);
         return webClient.get()
                 .uri(uriBuilder->
                         uriBuilder
