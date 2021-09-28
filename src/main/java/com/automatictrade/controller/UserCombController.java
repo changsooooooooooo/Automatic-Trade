@@ -1,12 +1,12 @@
 package com.automatictrade.controller;
 
+import com.automatictrade.dto.CoinDayCandleDTO;
+import com.automatictrade.service.RecordLogic;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
@@ -16,18 +16,10 @@ import java.util.List;
 @RequestMapping(value="/usercomb")
 public class UserCombController {
 
-    @Value("${candle.url}")
-    private String url;
+    private final RecordLogic recordLogic;
 
     @GetMapping("/bigdiff")
-    public Mono<String> recordBigDiffCoins(@RequestParam int count){
-        WebClient webClient = WebClient.create(url);
-        return webClient.get()
-                .uri(uriBuilder->
-                        uriBuilder
-                                .queryParam("market", "KRW-BTC")
-                                .build())
-                .retrieve()
-                .bodyToMono(String.class);
+    public Mono<List<CoinDayCandleDTO>> recordBigDiffCoins(@RequestParam int count) {
+        return recordLogic.getBigDiffCand(count);
     }
 }

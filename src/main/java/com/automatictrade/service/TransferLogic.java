@@ -5,7 +5,7 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.automatictrade.config.AWSS3Config;
 import com.automatictrade.dto.CoinTradeRecordDTO;
 import com.automatictrade.exceptions.FunctionWithException;
-import com.automatictrade.exceptions.TransferLogicException;
+import com.automatictrade.exceptions.ServiceLogicException;
 import com.automatictrade.repository.CoinTradeDBRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -63,9 +63,8 @@ public class TransferLogic {
             try {
                 return fe.apply(arg);
             } catch (Exception e) {
-                throw new TransferLogicException("Check Transfer DB Service Logic", e.getCause());
+                throw new ServiceLogicException("Check Transfer DB Service Logic", e.getCause());
             }
         };
     }
-
 }

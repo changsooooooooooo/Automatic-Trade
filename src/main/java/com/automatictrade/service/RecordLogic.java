@@ -1,6 +1,8 @@
 package com.automatictrade.service;
 
 import com.automatictrade.dto.CoinDayCandleDTO;
+import com.automatictrade.exceptions.FunctionWithException;
+import com.automatictrade.exceptions.ServiceLogicException;
 import com.automatictrade.repository.CoinDBRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -9,9 +11,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,31 +28,40 @@ public class RecordLogic {
 
     private final CoinDBRepository coinDBRepository;
 
-    public List<Mono<String>> getBigDiffCand(int count){
+    public Mono<List<CoinDayCandleDTO>> getBigDiffCand(final int count) {
+        WebClient webClient = WebClient.create(candleUrl);
         List<String> coinList = coinDBRepository.findDistinctCoins();
-        return coinList.stream()
-                .map(coin->getCandle(coin))
-                .sorted()
+        return Flux.fromIterable(coinList)
+                .map(coin->getDayCandle(coin, webClient))
+                .flatMap(str->strToCandleDTO(str))
+                .sort(Comparator.comparing(dto->dto.getLowPrice()-dto.getHighPrice()))
                 .collect(Collectors.toList());
     }
 
-    public Mono<String> getCandle(String coinName){
-        WebClient webClient = WebClient.create(candleUrl);
+    public Mono<String> getDayCandle(final String coinName, final WebClient webClient) {
         return webClient.get()
                 .uri(uriBuilder->
-                        uriBuilder
-                                .queryParam("market", coinName)
+                        uriBuilder.queryParam("market", coinName)
                                 .build())
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .bodyToMono(String.class);
     }
 
-    public void monoToCandleDTO(Mono<String> clientContent){
+    public Mono<CoinDayCandleDTO> strToCandleDTO(final Mono<String> clientContent) {
         ObjectMapper mapper = new ObjectMapper();
-        return clientContent.map(content->new JSONArray(content).get(0))
-                .map(json->mapper.readValue(json.toString(), CoinDayCandleDTO.class))
-
+        return clientContent.map(str->String.valueOf(new JSONArray(str).get(0)))
+                .map(wrapper(json->mapper.readValue(json, CoinDayCandleDTO.class)))
+                .filter(dto->dto.getClass().equals(CoinDayCandleDTO.class));
     }
 
+    private <T, R> Function<T, R> wrapper(final FunctionWithException<T, R> fe) {
+        return arg -> {
+            try {
+                return fe.apply(arg);
+            } catch (Exception e) {
+                throw new ServiceLogicException("Check Record TO DTO Service Logic", e.getCause());
+            }
+        };
+    }
 }
