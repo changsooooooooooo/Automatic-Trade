@@ -6,7 +6,6 @@ import com.automatictrade.exceptions.ServiceLogicException;
 import com.automatictrade.repository.CoinDBRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -24,17 +23,24 @@ import java.util.function.Function;
 @RequiredArgsConstructor
 public class RecordLogic {
 
+    @Value("${candle.standard}")
+    private int standard;
+
     @Value("${candle.url}")
     private String candleUrl;
+
+    @Value("${candle.standard_duration}")
+    private int standardDuration;
 
     private final CoinDBRepository coinDBRepository;
 
     public Flux<String> getBigDiffCand(final int count) {
         WebClient webClient = WebClient.create(candleUrl);
         List<String> coinList = coinDBRepository.findDistinctCoins();
-        return Flux.interval(Duration.ofSeconds(2))
-                .map(tick->coinList.subList(tick.intValue()*10,
-                        Math.min(coinList.size(), (tick.intValue()+1)*10)))
+        return Flux.interval(Duration.ofSeconds(standardDuration))
+                .map(tick->coinList.subList(tick.intValue()*standard,
+                        Math.min(coinList.size(), (tick.intValue()+1)*standard)))
+                .take(coinList.size()/standard)
                 .flatMap(list->makeSubResult(list, webClient))
                 .sort(Comparator.comparing(dto->dto.getLowPrice()-dto.getHighPrice()))
                 .take(count)
@@ -53,8 +59,7 @@ public class RecordLogic {
                         uriBuilder.queryParam("market", coinName)
                                 .build())
                 .accept(MediaType.APPLICATION_JSON)
-                .exchangeToMono(response->response.bodyToMono(String.class))
-                .log();
+                .exchangeToMono(response->response.bodyToMono(String.class));
     }
 
     public Mono<CoinDayCandleDTO> strToCandleDTO(final Mono<String> clientContent) {
