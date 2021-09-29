@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Flux;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -16,7 +18,9 @@ public class UserCombController {
     private final RecordLogic recordLogic;
 
     @GetMapping("/bigdiff")
-    public Flux<String> recordBigDiffCoins(@RequestParam int count) {
-        return recordLogic.getBigDiffCand(count);
+    public List<String> recordBigDiffCoins(@RequestParam int count) {
+        return recordLogic.getBigDiffCand(count)
+                .toStream()
+                .collect(Collectors.toList());
     }
 }
