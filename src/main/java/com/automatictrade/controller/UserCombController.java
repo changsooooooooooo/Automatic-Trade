@@ -19,7 +19,7 @@ public class UserCombController {
 
     @GetMapping("/bigdiff")
     public List<String> recordBigDiffCoins(@RequestParam int count) {
-        return recordLogic.getBigDiffCand(count)
+        return recordLogic.getBigDiffCoins(count)
                 .toStream()
                 .collect(Collectors.toList());
     }

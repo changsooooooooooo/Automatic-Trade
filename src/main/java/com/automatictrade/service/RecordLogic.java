@@ -34,7 +34,7 @@ public class RecordLogic {
 
     private final CoinDBRepository coinDBRepository;
 
-    public Flux<String> getBigDiffCand(final int count) {
+    public Flux<String> getBigDiffCoins(final int count) {
         WebClient webClient = WebClient.create(candleUrl);
         List<String> coinList = coinDBRepository.findDistinctCoins();
         return Flux.interval(Duration.ofSeconds(standardDuration))
