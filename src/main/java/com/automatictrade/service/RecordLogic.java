@@ -42,7 +42,7 @@ public class RecordLogic {
                         Math.min(coinList.size(), (tick.intValue()+1)*standard)))
                 .take(coinList.size()/standard)
                 .flatMap(list->makeSubResult(list, webClient))
-                .sort(Comparator.comparing(dto->dto.getLowPrice()-dto.getHighPrice()))
+                .sort(Comparator.comparing(dto->(dto.getLowPrice()-dto.getHighPrice())/dto.getTradePrice()))
                 .take(count)
                 .map(dto->dto.getMarket());
     }
