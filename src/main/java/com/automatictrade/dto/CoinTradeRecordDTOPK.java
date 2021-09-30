@@ -14,9 +14,9 @@ import java.io.Serializable;
 public class CoinTradeRecordDTOPK implements Serializable {
 
     @ManyToOne
-    @JoinColumn(name="coin_name")
     @Column(name="code")
     @JsonProperty("cd")
+    @JoinColumn(name="coin_name")
     private CoinThemeDTO coinType;
 
     @Column(name="sequential_id")
