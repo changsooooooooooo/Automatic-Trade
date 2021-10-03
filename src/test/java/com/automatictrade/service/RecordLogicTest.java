@@ -27,6 +27,7 @@ class RecordLogicTest {
         System.out.println("size : "+coinList.size());
         Flux<List<String>> x = Flux.interval(Duration.ofSeconds(coinList.size()/10))
                 .map(tick->coinList.subList(tick.intValue()*10, (tick.intValue()+1)*10));
+
         System.out.println("x : "+x);
         System.out.println(x.subscribe());
         x.subscribe(
