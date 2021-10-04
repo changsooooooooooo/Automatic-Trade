@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Getter
-@Table(name = "coin_close")
+@Table(name = "coin_accum_volume")
 public class CoinAcuumVolumeDAO {
 
     @EmbeddedId

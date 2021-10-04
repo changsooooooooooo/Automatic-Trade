@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Getter
-@Table(name = "coin_close")
+@Table(name = "coin_min_max")
 public class CoinMinMaxDAO {
 
     @EmbeddedId
