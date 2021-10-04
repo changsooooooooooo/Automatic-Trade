@@ -1,6 +1,6 @@
 package com.automatictrade.controller;
 
-import com.automatictrade.dto.CoinDayCandleDTO;
+import com.automatictrade.data.dto.CoinDayCandleDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONArray;

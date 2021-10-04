@@ -1,4 +1,4 @@
-package com.automatictrade.dto;
+package com.automatictrade.data.dao;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,8 +11,8 @@ import javax.persistence.Entity;
 @Entity(name = "coins")
 @AllArgsConstructor
 @NoArgsConstructor
-public class CoinThemeDTO {
+public class CoinThemeDAO {
 
     @EmbeddedId
-    private CoinThemeDTOPK coinThemeDTOPK;
+    private CoinThemeDAOPK coinThemeDTOPK;
 }

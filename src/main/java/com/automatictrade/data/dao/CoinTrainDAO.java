@@ -1,4 +1,4 @@
-package com.automatictrade.dto;
+package com.automatictrade.data.dao;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,10 +14,10 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "coin_train")
-public class CoinTrainDTO {
+public class CoinTrainDAO {
 
     @EmbeddedId
-    private CoinTrainDTOPK coinTrainDTOPK;
+    private CoinTrainDAOPK coinTrainDTOPK;
 
     @Column(name = "open")
     private Double openingPrice;

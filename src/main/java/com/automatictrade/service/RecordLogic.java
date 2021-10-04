@@ -1,6 +1,6 @@
 package com.automatictrade.service;
 
-import com.automatictrade.dto.CoinDayCandleDTO;
+import com.automatictrade.data.dto.CoinDayCandleDTO;
 import com.automatictrade.exceptions.FunctionWithException;
 import com.automatictrade.exceptions.ServiceLogicException;
 import com.automatictrade.repository.CoinDBRepository;

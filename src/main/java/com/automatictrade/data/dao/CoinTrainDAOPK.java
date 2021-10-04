@@ -1,4 +1,4 @@
-package com.automatictrade.dto;
+package com.automatictrade.data.dao;
 
 import lombok.Getter;
 
@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Embeddable
-public class CoinTrainDTOPK implements Serializable {
+public class CoinTrainDAOPK implements Serializable {
 
     @Column(name="market")
     private String market;

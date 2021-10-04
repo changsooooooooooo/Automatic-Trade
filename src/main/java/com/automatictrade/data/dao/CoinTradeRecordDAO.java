@@ -1,4 +1,4 @@
-package com.automatictrade.dto;
+package com.automatictrade.data.dao;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
@@ -16,11 +16,11 @@ import javax.persistence.Table;
 @Table(name = "coin_trade")
 @AllArgsConstructor
 @NoArgsConstructor
-public class CoinTradeRecordDTO {
+public class CoinTradeRecordDAO {
 
     @EmbeddedId
     @JsonUnwrapped
-    private CoinTradeRecordDTOPK coinTradeRecordDTOPK;
+    private CoinTradeRecordDAOPK coinTradeRecordDTOPK;
 
     @Column(name="ask_bid")
     @JsonProperty("ab")

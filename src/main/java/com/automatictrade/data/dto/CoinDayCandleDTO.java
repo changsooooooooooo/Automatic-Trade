@@ -1,4 +1,4 @@
-package com.automatictrade.dto;
+package com.automatictrade.data.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
