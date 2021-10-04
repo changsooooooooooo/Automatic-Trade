@@ -15,6 +15,9 @@ public class CoinAcuumVolumeDAO {
     @EmbeddedId
     private CoinSegmentDAOPK coinOpenDAOPK;
 
-    @Column(name="accumulated_volume")
-    private Double accumulatedVolume;
+    @Column(name="volume")
+    private Double volume;
+
+    @Column(name="accumulate_volume")
+    private Double accumulateVolume;
 }

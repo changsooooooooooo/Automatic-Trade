@@ -5,7 +5,7 @@ import lombok.Getter;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Getter
 @Embeddable
@@ -15,5 +15,5 @@ public class CoinTrainDAOPK implements Serializable {
     private String market;
 
     @Column(name="time")
-    private LocalDateTime time;
+    private Timestamp time;
 }

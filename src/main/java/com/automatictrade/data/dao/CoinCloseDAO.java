@@ -1,11 +1,13 @@
 package com.automatictrade.data.dao;
 
 import lombok.Getter;
+import org.joda.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.sql.Timestamp;
 
 @Entity
 @Getter
@@ -17,4 +19,7 @@ public class CoinCloseDAO {
 
     @Column(name="close")
     private Double closePrice;
+
+    @Column(name="timestamp")
+    private Timestamp timestamp;
 }
