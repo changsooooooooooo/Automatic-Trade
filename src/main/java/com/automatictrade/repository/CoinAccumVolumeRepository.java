@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CoinAccumVolumeRepository extends JpaRepository<CoinAcuumVolumeDAO, CoinSegmentDAOPK> {
 
+
     @Query(value="insert into coin_accum_volume (code, time, volume, accumulate_volume)\n" +
             "select t.code, t.time, max(t.volume) as volume, max(t.accumulate_volume) as accumulate_volume\n" +
             "from(\n" +
