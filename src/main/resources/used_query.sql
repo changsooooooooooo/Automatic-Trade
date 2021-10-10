@@ -1,3 +1,5 @@
+------------------- query started ----------------------
+
 select substr(trade_time, 0, length(trade_time)-2) from coin_trade;
 
 -------------------- make_substring --------------------
