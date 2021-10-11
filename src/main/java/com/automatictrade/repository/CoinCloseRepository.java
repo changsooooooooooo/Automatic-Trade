@@ -25,5 +25,6 @@ public interface CoinCloseRepository extends JpaRepository<CoinCloseDAO, CoinSeg
             "        ) t\n" +
             "order by code, time", nativeQuery = true)
 
+
     void insertInToCoinClose();
 }
