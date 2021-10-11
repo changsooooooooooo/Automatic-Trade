@@ -23,5 +23,4 @@ public interface CoinTrainDBRepository extends JpaRepository<CoinTrainDAO, CoinT
             "         left outer join coin_accum_volume cav on mm.code = cav.code and mm.time = cav.time\n" +
             "order by market, time", nativeQuery = true)
     void insertInToCoinTrain();
-
 }
