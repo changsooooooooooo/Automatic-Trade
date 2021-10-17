@@ -3,12 +3,16 @@ package com.automatictrade.repository;
 import com.automatictrade.data.dao.CoinAcuumVolumeDAO;
 import com.automatictrade.data.dao.CoinSegmentDAOPK;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 @Repository
 public interface CoinAccumVolumeRepository extends JpaRepository<CoinAcuumVolumeDAO, CoinSegmentDAOPK> {
 
+    @Modifying(clearAutomatically = true)
     @Query(value="insert into coin_accum_volume (code, time, volume, accumulate_volume)\n" +
             "select t.code, t.time, max(t.volume) as volume, max(t.accumulate_volume) as accumulate_volume\n" +
             "from(\n" +
@@ -20,4 +24,6 @@ public interface CoinAccumVolumeRepository extends JpaRepository<CoinAcuumVolume
             "group by t.code, t.time\n" +
             "order by t.code, t.time", nativeQuery = true)
     void insertIntoCoinAccumVolume();
+
+    Optional<CoinAcuumVolumeDAO> findById(CoinSegmentDAOPK coinSegmentDAOPK);
 }
