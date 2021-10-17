@@ -13,7 +13,7 @@ import javax.persistence.Table;
 public class CoinMinMaxDAO {
 
     @EmbeddedId
-    private CoinSegmentDAOPK coinOpenDAOPK;
+    private CoinSegmentDAOPK coinMinMaxDAOPK;
 
     @Column(name="low")
     private Double minPrice;

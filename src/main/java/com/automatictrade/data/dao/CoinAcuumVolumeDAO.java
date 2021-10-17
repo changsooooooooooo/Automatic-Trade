@@ -13,7 +13,7 @@ import javax.persistence.Table;
 public class CoinAcuumVolumeDAO {
 
     @EmbeddedId
-    private CoinSegmentDAOPK coinOpenDAOPK;
+    private CoinSegmentDAOPK coinAccumVolumeDAOPK;
 
     @Column(name="volume")
     private Double volume;

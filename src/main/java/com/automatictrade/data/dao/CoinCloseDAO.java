@@ -15,7 +15,7 @@ import java.sql.Timestamp;
 public class CoinCloseDAO {
 
     @EmbeddedId
-    private CoinSegmentDAOPK coinOpenDAOPK;
+    private CoinSegmentDAOPK coinCloseDAOPK;
 
     @Column(name="close")
     private Double closePrice;

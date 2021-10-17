@@ -3,6 +3,7 @@ package com.automatictrade.data.dao;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,7 @@ import javax.persistence.Table;
 @Entity
 @Getter
 @Table(name = "coin_trade")
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class CoinTradeRecordDAO {
