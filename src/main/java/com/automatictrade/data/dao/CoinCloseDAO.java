@@ -19,7 +19,4 @@ public class CoinCloseDAO {
 
     @Column(name="close")
     private Double closePrice;
-
-    @Column(name="timestamp")
-    private Timestamp timestamp;
 }

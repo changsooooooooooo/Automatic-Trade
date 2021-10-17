@@ -9,14 +9,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CoinCloseRepository extends JpaRepository<CoinCloseDAO, CoinSegmentDAOPK> {
 
-    @Query(value="insert into coin_close (code, time, close, timestamp)\n" +
+    @Query(value="insert into coin_close (code, time, close)\n" +
             "select t.code,\n" +
             "       substr(t.trade_time, 0, length(trade_time)-2) as time,\n" +
             "       t.trade_price as close,\n" +
-            "       t.time_stamp as time_stamp\n" +
             "from(\n" +
             "        select\n" +
-            "            code, trade_time, trade_price, to_timestamp(trade_timestamp/1000) +'9hours' as time_stamp\n" +
+            "            code, trade_time, trade_price,\n" +
             "        from coin_trade\n" +
             "        where (code, trade_time) in (\n" +
             "            select code, max(trade_time) as trade_time\n" +
