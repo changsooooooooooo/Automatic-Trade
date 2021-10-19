@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.annotation.Rollback;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -21,10 +22,13 @@ class CoinAccumVolumeRepositoryTest {
     private CoinAccumVolumeRepository coinAccumVolumeRepository;
 
     @Autowired
-    private CoinDBRepository coinDBRepository;
+    private CoinThemeDAORepository coinThemeDAORepository;
 
     @Autowired
     private CoinTradeDBRepository coinTradeDBRepository;
+
+    @Autowired
+    private CoinDAORepository coinDAORepository;
 
     private CoinDAO coinDAO;
     private CoinThemeDAO coinThemeDAO;
@@ -58,15 +62,17 @@ class CoinAccumVolumeRepositoryTest {
                 .timestamp(1632217069340L)
                 .build();
 
-        coinDBRepository.save(coinThemeDAO);
+        coinDAORepository.save(coinDAO);
+        coinThemeDAORepository.save(coinThemeDAO);
         coinTradeDBRepository.save(coinTradeRecordDAO);
     }
 
     @Test
+    @Rollback(false)
     @DisplayName("Builder Test")
     void buildTest(){
         assertEquals("1632217069000003", coinTradeRecordDAO.getSequentialID());
-        assertEquals("KRW-BTH", coinThemeDAO.getCoinDAO().getCoinName());
+        assertEquals("KRW-BTC", coinThemeDAO.getCoinDAO().getCoinName());
     }
 
     @Test

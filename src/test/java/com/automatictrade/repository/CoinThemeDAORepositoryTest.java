@@ -9,14 +9,14 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class CoinDBRepositoryTest {
+class CoinThemeDAORepositoryTest {
 
     @Autowired
-    private CoinDBRepository coinDBRepository;
+    private CoinThemeDAORepository coinThemeDAORepository;
 
     @Test
     void getDistinct(){
-        List<String> coinList = coinDBRepository.findDistinctCoins();
+        List<String> coinList = coinThemeDAORepository.findDistinctCoins();
         for(String coin : coinList){
             System.out.println(coin);
         }

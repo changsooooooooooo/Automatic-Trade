@@ -3,7 +3,7 @@ package com.automatictrade.service;
 import com.automatictrade.data.dto.CoinDayCandleDTO;
 import com.automatictrade.exceptions.FunctionWithException;
 import com.automatictrade.exceptions.ServiceLogicException;
-import com.automatictrade.repository.CoinDBRepository;
+import com.automatictrade.repository.CoinThemeDAORepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONArray;
@@ -32,11 +32,11 @@ public class RecordLogic {
     @Value("${candle.standard_duration}")
     private int standardDuration;
 
-    private final CoinDBRepository coinDBRepository;
+    private final CoinThemeDAORepository coinThemeDAORepository;
 
     public Flux<String> getBigDiffCoins(final int count) {
         WebClient webClient = WebClient.create(candleUrl);
-        List<String> coinList = coinDBRepository.findDistinctCoins();
+        List<String> coinList = coinThemeDAORepository.findDistinctCoins();
         return Flux.interval(Duration.ofSeconds(standardDuration))
                 .map(tick->coinList.subList(tick.intValue()*standard,
                         Math.min(coinList.size(), (tick.intValue()+1)*standard)))

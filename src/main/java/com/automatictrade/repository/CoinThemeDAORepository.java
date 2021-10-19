@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CoinDBRepository extends JpaRepository<CoinThemeDAO, Long> {
+public interface CoinThemeDAORepository extends JpaRepository<CoinThemeDAO, Long> {
 
     @Query(value = "select distinct coin_name from coins", nativeQuery = true)
     List<String> findDistinctCoins();
