@@ -13,7 +13,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class CoinThemeDAORepositoryTest {
+class CoinDAORepositoryTest {
 
     @Autowired
     private CoinDAORepository coinDAORepository;
@@ -70,32 +70,9 @@ class CoinThemeDAORepositoryTest {
     }
 
     @Test
-    void getDistinct() {
-        List<String> coinList = coinThemeDAORepository.findDistinctCoins();
-        for (String coin : coinList) {
-            System.out.println(coin);
-        }
-    }
-
-    @Test
-    @DisplayName("Query Join Fetch Test")
-    void joinFetchQueryTest(){
-        List<CoinThemeDAO> coinThemeDAOList = coinThemeDAORepository.findAllWithFetch();
-
-        for(CoinThemeDAO coinThemeDAO : coinThemeDAOList){
-            System.out.println(coinThemeDAO.getCoinDAO().getCoinName());
-        }
-
-        assertEquals(0, coinThemeDAOList.size());
-    }
-
-    @Test
-    @DisplayName("Query Find All Test")
-    void findAllTest(){
-        List<CoinThemeDAO> coinThemeDAOList = coinThemeDAORepository.findAll();
-
-        for(CoinThemeDAO coinThemeDAO : coinThemeDAOList){
-            System.out.println(coinThemeDAO.getCoinDAO().getCoinName());
-        }
+    @DisplayName("Query Fetch Test")
+    void fetchQueryTest(){
+        List<CoinDAO> coinDaoList = coinDAORepository.findAllWithFetch();
+        assertEquals(2, coinDaoList.size());
     }
 }
