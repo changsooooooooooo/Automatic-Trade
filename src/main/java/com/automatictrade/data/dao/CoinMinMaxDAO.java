@@ -2,18 +2,22 @@ package com.automatictrade.data.dao;
 
 import lombok.Getter;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-@Entity
 @Getter
-@Table(name = "coin_min_max")
+@Entity(name = "coin_min_max")
 public class CoinMinMaxDAO {
 
-    @EmbeddedId
-    private CoinSegmentDAOPK coinMinMaxDAOPK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name="coin_name")
+    private CoinDAO coinDAO;
+
+    @Column(name="time")
+    private String time;
 
     @Column(name="low")
     private Double minPrice;

@@ -1,27 +1,26 @@
 package com.automatictrade.repository;
 
 import com.automatictrade.data.dao.CoinCloseDAO;
-import com.automatictrade.data.dao.CoinSegmentDAOPK;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CoinCloseRepository extends JpaRepository<CoinCloseDAO, CoinSegmentDAOPK> {
+public interface CoinCloseRepository extends JpaRepository<CoinCloseDAO, Long> {
 
-    @Query(value="insert into coin_close (code, time, close)\n" +
-            "select t.code,\n" +
+    @Query(value="insert into coin_close (coin_name, time, close)\n" +
+            "select t.coin_name,\n" +
             "       substr(t.trade_time, 0, length(trade_time)-2) as time,\n" +
             "       t.trade_price as close,\n" +
             "from(\n" +
             "        select\n" +
-            "            code, trade_time, trade_price,\n" +
+            "            coin_name, trade_time, trade_price,\n" +
             "        from coin_trade\n" +
-            "        where (code, trade_time) in (\n" +
-            "            select code, max(trade_time) as trade_time\n" +
+            "        where (coin_name, trade_time) in (\n" +
+            "            select coin_name, max(trade_time) as trade_time\n" +
             "            from coin_trade group by code, substr(trade_time, 0, length(trade_time)-2)\n" +
             "        )\n" +
             "        ) t\n" +
-            "order by code, time", nativeQuery = true)
+            "order by coin_name, time", nativeQuery = true)
     void insertInToCoinClose();
 }

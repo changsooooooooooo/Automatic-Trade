@@ -7,22 +7,27 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-@Entity
 @Getter
-@Table(name = "coin_trade")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity(name = "coin_trade")
 public class CoinTradeRecordDAO {
 
-    @EmbeddedId
-    @JsonUnwrapped
-    private CoinTradeRecordDAOPK coinTradeRecordDTOPK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name="coin_name")
+    @JsonProperty("cd")
+    private CoinDAO coinDAO;
+
+    @Column(name="sequential_id")
+    @JsonProperty("sid")
+    private String sequentialID;
 
     @Column(name="ask_bid")
     @JsonProperty("ab")

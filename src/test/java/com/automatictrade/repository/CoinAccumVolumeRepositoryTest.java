@@ -1,6 +1,9 @@
 package com.automatictrade.repository;
 
-import com.automatictrade.data.dao.*;
+import com.automatictrade.data.dao.CoinAcuumVolumeDAO;
+import com.automatictrade.data.dao.CoinDAO;
+import com.automatictrade.data.dao.CoinThemeDAO;
+import com.automatictrade.data.dao.CoinTradeRecordDAO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,18 +26,24 @@ class CoinAccumVolumeRepositoryTest {
     @Autowired
     private CoinTradeDBRepository coinTradeDBRepository;
 
+    private CoinDAO coinDAO;
     private CoinThemeDAO coinThemeDAO;
-    private CoinSegmentDAOPK coinSegmentDAOPK;
     private CoinTradeRecordDAO coinTradeRecordDAO;
 
     @BeforeEach
     void setUp() {
-        coinThemeDAO = CoinThemeDAO.builder()
-                .coinThemeDTOPK(new CoinThemeDAOPK("KRW-BTH", "BTC"))
+        coinDAO = new CoinDAO().builder()
+                .coinName("KRW-BTC")
+                .build();
+
+        coinThemeDAO = new CoinThemeDAO().builder()
+                .coinDAO(coinDAO)
+                .coinCategory("bitcoin")
                 .build();
 
         coinTradeRecordDAO = CoinTradeRecordDAO.builder()
-                .coinTradeRecordDTOPK(new CoinTradeRecordDAOPK("KRW-BTH", "1632217069000003"))
+                .coinDAO(coinDAO)
+                .sequentialID("1632217069000003")
                 .tradeDate("2021-09-21")
                 .tradeVolume(0.02153283)
                 .tradePrice(265750.0)
@@ -49,11 +58,6 @@ class CoinAccumVolumeRepositoryTest {
                 .timestamp(1632217069340L)
                 .build();
 
-        coinSegmentDAOPK = CoinSegmentDAOPK.builder()
-                .code("KRW-BTH")
-                .time("09:38")
-                .build();
-
         coinDBRepository.save(coinThemeDAO);
         coinTradeDBRepository.save(coinTradeRecordDAO);
     }
@@ -61,15 +65,15 @@ class CoinAccumVolumeRepositoryTest {
     @Test
     @DisplayName("Builder Test")
     void buildTest(){
-        assertEquals("1632217069000003", coinTradeRecordDAO.getCoinTradeRecordDTOPK().getSequentialID());
-        assertEquals("KRW-BTH", coinThemeDAO.getCoinThemeDTOPK().getCoinName());
+        assertEquals("1632217069000003", coinTradeRecordDAO.getSequentialID());
+        assertEquals("KRW-BTH", coinThemeDAO.getCoinDAO().getCoinName());
     }
 
     @Test
     @DisplayName("Query Test")
     void insertQueryTest(){
         coinAccumVolumeRepository.insertIntoCoinAccumVolume();
-        CoinAcuumVolumeDAO coinAcuumVolumeDAO = coinAccumVolumeRepository.findById(coinSegmentDAOPK)
+        CoinAcuumVolumeDAO coinAcuumVolumeDAO = coinAccumVolumeRepository.findById(1L)
                 .orElse(new CoinAcuumVolumeDAO());
         assertEquals(coinTradeRecordDAO.getTradeVolume(), coinAcuumVolumeDAO.getVolume());
     }

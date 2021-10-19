@@ -1,22 +1,25 @@
 package com.automatictrade.data.dao;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-@Entity
 @Getter
 @NoArgsConstructor
-@Table(name = "coin_open")
+@Entity(name = "coin_open")
 public class CoinOpenDAO {
 
-    @EmbeddedId
-    private CoinSegmentDAOPK coinOpenDAOPK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name="coin_name")
+    private CoinDAO coinDAO;
+
+    @Column(name="time")
+    private String time;
 
     @Column(name="open")
     private Double openPrice;

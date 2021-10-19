@@ -23,7 +23,4 @@ public class CoinDAO {
     @Column(name="coin_name")
     private String coinName;
 
-    @OneToMany(mappedBy = "coinDAO")
-    private List<CoinThemeDAO> coinThemeDAOList = new ArrayList<>();
-
 }

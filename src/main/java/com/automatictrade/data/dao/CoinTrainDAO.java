@@ -7,13 +7,11 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Table;
 
-@Entity
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "coin_train")
+@Entity(name = "coin_train")
 public class CoinTrainDAO {
 
     @EmbeddedId
