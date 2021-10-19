@@ -20,7 +20,7 @@ public class CoinTradeRecordDAO {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="coin_name")
     @JsonProperty("cd")
     private CoinDAO coinDAO;

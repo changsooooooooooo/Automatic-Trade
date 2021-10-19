@@ -18,7 +18,7 @@ public interface CoinCloseRepository extends JpaRepository<CoinCloseDAO, Long> {
             "        from coin_trade\n" +
             "        where (coin_name, trade_time) in (\n" +
             "            select coin_name, max(trade_time) as trade_time\n" +
-            "            from coin_trade group by code, substr(trade_time, 0, length(trade_time)-2)\n" +
+            "            from coin_trade group by coin_name, substr(trade_time, 0, length(trade_time)-2)\n" +
             "        )\n" +
             "        ) t\n" +
             "order by coin_name, time", nativeQuery = true)

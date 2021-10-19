@@ -12,7 +12,7 @@ public class CoinAcuumVolumeDAO {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name="coin_name")
     private CoinDAO coinDAO;
 

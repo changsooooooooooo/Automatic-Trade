@@ -10,7 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.annotation.Rollback;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -27,12 +28,12 @@ class CoinAccumVolumeRepositoryTest {
     @Autowired
     private CoinTradeDBRepository coinTradeDBRepository;
 
-    @Autowired
-    private CoinDAORepository coinDAORepository;
-
     private CoinDAO coinDAO;
+    private CoinDAO coinDAO2;
     private CoinThemeDAO coinThemeDAO;
+    private CoinThemeDAO coinThemeDAO2;
     private CoinTradeRecordDAO coinTradeRecordDAO;
+    private CoinTradeRecordDAO coinTradeRecordDAO2;
 
     @BeforeEach
     void setUp() {
@@ -40,10 +41,23 @@ class CoinAccumVolumeRepositoryTest {
                 .coinName("KRW-BTC")
                 .build();
 
+        coinDAO2 = new CoinDAO().builder()
+                .coinName("KRW-ETH")
+                .build();
+
+
         coinThemeDAO = new CoinThemeDAO().builder()
                 .coinDAO(coinDAO)
                 .coinCategory("bitcoin")
                 .build();
+
+        coinThemeDAO2 = new CoinThemeDAO().builder()
+                .coinDAO(coinDAO2)
+                .coinCategory("ethereum")
+                .build();
+
+        coinThemeDAORepository.save(coinThemeDAO);
+        coinThemeDAORepository.save(coinThemeDAO2);
 
         coinTradeRecordDAO = CoinTradeRecordDAO.builder()
                 .coinDAO(coinDAO)
@@ -62,13 +76,28 @@ class CoinAccumVolumeRepositoryTest {
                 .timestamp(1632217069340L)
                 .build();
 
-        coinDAORepository.save(coinDAO);
-        coinThemeDAORepository.save(coinThemeDAO);
+        coinTradeRecordDAO2 = CoinTradeRecordDAO.builder()
+                .coinDAO(coinDAO2)
+                .sequentialID("1632217069000003")
+                .tradeDate("2021-09-21")
+                .tradeVolume(0.02153283)
+                .tradePrice(265750.0)
+                .tradeTime("09:38:50")
+                .tradeType("BID")
+                .tradeTimestamp(1632217069000L)
+                .dataType("trade")
+                .changePrice(2950.0)
+                .streamType("SNAPSHOT")
+                .changeType("RISE")
+                .prevClosingPrice(262800.0)
+                .timestamp(1632217069340L)
+                .build();
+
         coinTradeDBRepository.save(coinTradeRecordDAO);
+        coinTradeDBRepository.save(coinTradeRecordDAO2);
     }
 
     @Test
-    @Rollback(false)
     @DisplayName("Builder Test")
     void buildTest(){
         assertEquals("1632217069000003", coinTradeRecordDAO.getSequentialID());
@@ -79,8 +108,21 @@ class CoinAccumVolumeRepositoryTest {
     @DisplayName("Query Test")
     void insertQueryTest(){
         coinAccumVolumeRepository.insertIntoCoinAccumVolume();
-        CoinAcuumVolumeDAO coinAcuumVolumeDAO = coinAccumVolumeRepository.findById(1L)
-                .orElse(new CoinAcuumVolumeDAO());
-        assertEquals(coinTradeRecordDAO.getTradeVolume(), coinAcuumVolumeDAO.getVolume());
+        List<CoinAcuumVolumeDAO> coinAcuumVolumeDAOList = coinAccumVolumeRepository.findAll();
+
+        for(CoinAcuumVolumeDAO coinAcuumVolumeDAO : coinAcuumVolumeDAOList){
+            System.out.println(coinAcuumVolumeDAO.getCoinDAO().getCoinName());
+        }
+    }
+
+    @Test
+    @DisplayName("Query Join Fetch Test")
+    void joinFetchQueryTest(){
+        coinAccumVolumeRepository.insertIntoCoinAccumVolume();
+        List<CoinAcuumVolumeDAO> coinAcuumVolumeDAOList = coinAccumVolumeRepository.findAllWithFetch();
+
+        for(CoinAcuumVolumeDAO coinAcuumVolumeDAO : coinAcuumVolumeDAOList){
+            System.out.println(coinAcuumVolumeDAO.getCoinDAO().getCoinName());
+        }
     }
 }

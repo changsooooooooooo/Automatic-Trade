@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 public interface CoinTrainDBRepository extends JpaRepository<CoinTrainDAO, CoinTrainDAOPK> {
 
     @Query(value="insert into coin_train\n" +
-            "select mm.code as market,\n" +
+            "select mm.coin_name,\n" +
             "       cc.timestamp as time,\n" +
             "       cc.close as close,\n" +
             "       mm.high as high,\n" +
@@ -18,10 +18,10 @@ public interface CoinTrainDBRepository extends JpaRepository<CoinTrainDAO, CoinT
             "       co.open as open,\n" +
             "       (cav.volume*((co.open+mm.low+mm.high)/3))/cav.accumulate_volume as vwap\n" +
             "from coin_min_max mm\n" +
-            "         left outer join coin_open co on mm.code = co.code and mm.time = co.time\n" +
-            "         left outer join coin_close cc on mm.code = cc.code and mm.time = cc.time\n" +
-            "         left outer join coin_accum_volume cav on mm.code = cav.code and mm.time = cav.time\n" +
-            "order by market, time", nativeQuery = true)
+            "         left outer join coin_open co on mm.coin_name = co.coin_name and mm.time = co.time\n" +
+            "         left outer join coin_close cc on mm.coin_name = cc.coin_name and mm.time = cc.time\n" +
+            "         left outer join coin_accum_volume cav on mm.coin_name = cav.code and mm.time = cav.time\n" +
+            "order by coin_name, time", nativeQuery = true)
     void insertInToCoinTrain();
 
 }

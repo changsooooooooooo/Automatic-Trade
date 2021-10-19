@@ -17,8 +17,8 @@ public interface CoinOpenRepository extends JpaRepository<CoinOpenDAO, Long> {
             "            coin_name, trade_time, trade_price\n" +
             "        from coin_trade\n" +
             "        where (coin_name, trade_time) in (\n" +
-            "            select code, min(trade_time) as trade_time\n" +
-            "            from coin_trade group by code, substr(trade_time, 0, length(trade_time)-2)\n" +
+            "            select coin_name, min(trade_time) as trade_time\n" +
+            "            from coin_trade group by coin_name, substr(trade_time, 0, length(trade_time)-2)\n" +
             "        )\n" +
             "    ) t\n" +
             "order by coin_name, time", nativeQuery = true)
