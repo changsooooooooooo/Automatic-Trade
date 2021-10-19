@@ -1,10 +1,13 @@
 package com.automatictrade.data.dao;
 
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Getter
+@NoArgsConstructor
 @Entity(name = "coin_accum_volume")
 public class CoinAcuumVolumeDAO {
 
@@ -24,4 +27,12 @@ public class CoinAcuumVolumeDAO {
 
     @Column(name="accumulate_volume")
     private Double accumulateVolume;
+
+    @Builder
+    public CoinAcuumVolumeDAO(CoinDAO coinDAO, String time, Double volume, Double accumulateVolume){
+        this.coinDAO = coinDAO;
+        this.time = time;
+        this.volume = volume;
+        this.accumulateVolume = accumulateVolume;
+    }
 }

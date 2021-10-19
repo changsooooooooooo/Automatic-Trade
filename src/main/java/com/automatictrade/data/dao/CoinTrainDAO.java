@@ -1,21 +1,27 @@
 package com.automatictrade.data.dao;
 
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
+import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "coin_train")
 public class CoinTrainDAO {
 
-    @EmbeddedId
-    private CoinTrainDAOPK coinTrainDTOPK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="coin_name")
+    private CoinDAO coinDAO;
+
+    @Column(name="time")
+    private Timestamp time;
 
     @Column(name = "open")
     private Double openingPrice;
@@ -31,4 +37,16 @@ public class CoinTrainDAO {
 
     @Column(name = "vwap")
     private Double vwap;
+
+    @Builder
+    public CoinTrainDAO(CoinDAO coinDAO, Timestamp time, Double openingPrice, Double highPrice, Double lowPrice,
+                        Double closingPrice, Double vwap) {
+        this.coinDAO = coinDAO;
+        this.time = time;
+        this.openingPrice = openingPrice;
+        this.highPrice = highPrice;
+        this.lowPrice = lowPrice;
+        this.closingPrice = closingPrice;
+        this.vwap = vwap;
+    }
 }

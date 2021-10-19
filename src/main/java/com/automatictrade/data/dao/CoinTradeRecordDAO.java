@@ -1,8 +1,6 @@
 package com.automatictrade.data.dao;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,8 +8,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Getter
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "coin_trade")
 public class CoinTradeRecordDAO {
@@ -76,5 +72,28 @@ public class CoinTradeRecordDAO {
     @Column(name="prev_closing_price")
     @JsonProperty("pcp")
     private Double prevClosingPrice;
+
+    @Builder
+    public CoinTradeRecordDAO(CoinDAO coinDAO, Double changePrice, String changeType,
+                              String dataType, Double prevClosingPrice, String sequentialID,
+                              String streamType, Long timestamp, String tradeDate,
+                              Double tradePrice, String tradeTime, Long tradeTimestamp,
+                              String tradeType, Double tradeVolume) {
+
+        this.coinDAO = coinDAO;
+        this.changePrice = changePrice;
+        this.changeType = changeType;
+        this.dataType = dataType;
+        this.prevClosingPrice = prevClosingPrice;
+        this.sequentialID = sequentialID;
+        this.streamType = streamType;
+        this.timestamp = timestamp;
+        this.tradeDate = tradeDate;
+        this.tradePrice = tradePrice;
+        this.tradeTime = tradeTime;
+        this.tradeType = tradeType;
+        this.tradeVolume = tradeVolume;
+        this.tradeTimestamp = tradeTimestamp;
+    }
 
 }

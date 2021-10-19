@@ -1,11 +1,14 @@
 package com.automatictrade.data.dao;
 
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Getter
 @Entity(name = "coin_close")
+@NoArgsConstructor
 public class CoinCloseDAO {
 
     @Id
@@ -21,4 +24,11 @@ public class CoinCloseDAO {
 
     @Column(name="close")
     private Double closePrice;
+
+    @Builder
+    public CoinCloseDAO(CoinDAO coinDAO, String time, Double closePrice){
+        this.coinDAO = coinDAO;
+        this.time = time;
+        this.closePrice = closePrice;
+    }
 }

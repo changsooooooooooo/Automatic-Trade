@@ -1,6 +1,5 @@
 package com.automatictrade.data.dao;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,9 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Getter
-@Builder
 @Entity(name = "coin_theme")
-@AllArgsConstructor
 @NoArgsConstructor
 public class CoinThemeDAO {
 
@@ -24,4 +21,10 @@ public class CoinThemeDAO {
 
     @Column(name="coin_category")
     private String coinCategory;
+
+    @Builder
+    public CoinThemeDAO(CoinDAO coinDAO, String coinCategory){
+        this.coinDAO = coinDAO;
+        this.coinCategory = coinCategory;
+    }
 }

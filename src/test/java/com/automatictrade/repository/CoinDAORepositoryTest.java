@@ -74,5 +74,6 @@ class CoinDAORepositoryTest {
     void fetchQueryTest(){
         List<CoinDAO> coinDaoList = coinDAORepository.findAllWithFetch();
         assertEquals(2, coinDaoList.size());
+
     }
 }

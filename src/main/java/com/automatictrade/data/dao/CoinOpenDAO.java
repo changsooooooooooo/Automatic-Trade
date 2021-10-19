@@ -1,5 +1,6 @@
 package com.automatictrade.data.dao;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -24,4 +25,10 @@ public class CoinOpenDAO {
     @Column(name="open")
     private Double openPrice;
 
+    @Builder
+    public CoinOpenDAO(CoinDAO coinDAO, String time, Double openPrice){
+        this.coinDAO = coinDAO;
+        this.time = time;
+        this.openPrice = openPrice;
+    }
 }

@@ -10,9 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity(name="coin_list")
 public class CoinDAO {
 
@@ -22,4 +20,9 @@ public class CoinDAO {
 
     @OneToMany(mappedBy = "coinDAO", cascade = CascadeType.ALL)
     private final List<CoinThemeDAO> coinThemeDAOList = new ArrayList<>();
+
+    @Builder
+    public CoinDAO(String coinName){
+        this.coinName = coinName;
+    }
 }
