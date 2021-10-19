@@ -37,21 +37,21 @@ class CoinAccumVolumeRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        coinDAO = new CoinDAO().builder()
+        coinDAO = CoinDAO.builder()
                 .coinName("KRW-BTC")
                 .build();
 
-        coinDAO2 = new CoinDAO().builder()
+        coinDAO2 = CoinDAO.builder()
                 .coinName("KRW-ETH")
                 .build();
 
 
-        coinThemeDAO = new CoinThemeDAO().builder()
+        coinThemeDAO = CoinThemeDAO.builder()
                 .coinDAO(coinDAO)
                 .coinCategory("bitcoin")
                 .build();
 
-        coinThemeDAO2 = new CoinThemeDAO().builder()
+        coinThemeDAO2 = CoinThemeDAO.builder()
                 .coinDAO(coinDAO2)
                 .coinCategory("ethereum")
                 .build();
