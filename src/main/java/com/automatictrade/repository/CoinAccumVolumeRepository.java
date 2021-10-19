@@ -26,8 +26,6 @@ public interface CoinAccumVolumeRepository extends JpaRepository<CoinAcuumVolume
             "order by t.coin_name, t.time", nativeQuery = true)
     void insertIntoCoinAccumVolume();
 
-    Optional<CoinAcuumVolumeDAO> findByCoinDAO(CoinDAO coinDAO);
-
     @Query(value = "select av from coin_accum_volume av join fetch av.coinDAO")
     List<CoinAcuumVolumeDAO> findAllWithFetch();
 }
