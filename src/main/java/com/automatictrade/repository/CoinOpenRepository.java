@@ -1,12 +1,12 @@
 package com.automatictrade.repository;
 
-import com.automatictrade.data.dao.CoinOpenDAO;
+import com.automatictrade.data.entity.CoinOpenEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CoinOpenRepository extends JpaRepository<CoinOpenDAO, Long> {
+public interface CoinOpenRepository extends JpaRepository<CoinOpenEntity, Long> {
 
     @Query(value="insert into coin_open\n" +
             "select t.coin_name,\n" +

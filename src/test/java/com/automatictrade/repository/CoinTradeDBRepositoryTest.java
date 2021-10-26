@@ -8,7 +8,7 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
-import com.automatictrade.data.dao.CoinTradeRecordDAO;
+import com.automatictrade.data.entity.CoinTradeRecordEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,7 +43,7 @@ class CoinTradeDBRepositoryTest {
             String string = StreamUtils.copyToString(obj.getObjectContent(), StandardCharsets.UTF_8);
             if (string.length()!=0){
                 System.out.println(new JSONObject(string));
-                CoinTradeRecordDAO ctr = mapper.readValue(string, CoinTradeRecordDAO.class);
+                CoinTradeRecordEntity ctr = mapper.readValue(string, CoinTradeRecordEntity.class);
                 coinTradeDBRepository.save(ctr);
             }
         }

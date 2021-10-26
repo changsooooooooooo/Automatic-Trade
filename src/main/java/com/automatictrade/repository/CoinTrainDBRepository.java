@@ -1,12 +1,12 @@
 package com.automatictrade.repository;
 
-import com.automatictrade.data.dao.CoinTrainDAO;
+import com.automatictrade.data.entity.CoinTrainEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CoinTrainDBRepository extends JpaRepository<CoinTrainDAO, Long> {
+public interface CoinTrainDBRepository extends JpaRepository<CoinTrainEntity, Long> {
 
     @Query(value="insert into coin_train\n" +
             "select mm.coin_name,\n" +

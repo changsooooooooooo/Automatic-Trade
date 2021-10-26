@@ -1,4 +1,4 @@
-package com.automatictrade.data.dao;
+package com.automatictrade.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity(name = "coin_trade")
-public class CoinTradeRecordDAO {
+public class CoinTradeRecordEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +19,7 @@ public class CoinTradeRecordDAO {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="coin_name")
     @JsonProperty("cd")
-    private CoinDAO coinDAO;
+    private CoinEntity coinDAO;
 
     @Column(name="sequential_id")
     @JsonProperty("sid")
@@ -74,11 +74,11 @@ public class CoinTradeRecordDAO {
     private Double prevClosingPrice;
 
     @Builder
-    public CoinTradeRecordDAO(CoinDAO coinDAO, Double changePrice, String changeType,
-                              String dataType, Double prevClosingPrice, String sequentialID,
-                              String streamType, Long timestamp, String tradeDate,
-                              Double tradePrice, String tradeTime, Long tradeTimestamp,
-                              String tradeType, Double tradeVolume) {
+    public CoinTradeRecordEntity(CoinEntity coinDAO, Double changePrice, String changeType,
+                                 String dataType, Double prevClosingPrice, String sequentialID,
+                                 String streamType, Long timestamp, String tradeDate,
+                                 Double tradePrice, String tradeTime, Long tradeTimestamp,
+                                 String tradeType, Double tradeVolume) {
 
         this.coinDAO = coinDAO;
         this.changePrice = changePrice;

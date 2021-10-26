@@ -1,9 +1,9 @@
 package com.automatictrade.repository;
 
-import com.automatictrade.data.dao.CoinAcuumVolumeDAO;
-import com.automatictrade.data.dao.CoinDAO;
-import com.automatictrade.data.dao.CoinThemeDAO;
-import com.automatictrade.data.dao.CoinTradeRecordDAO;
+import com.automatictrade.data.entity.CoinAcuumVolumeEntity;
+import com.automatictrade.data.entity.CoinEntity;
+import com.automatictrade.data.entity.CoinThemeEntity;
+import com.automatictrade.data.entity.CoinTradeRecordEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,30 +28,30 @@ class CoinAccumVolumeRepositoryTest {
     @Autowired
     private CoinTradeDBRepository coinTradeDBRepository;
 
-    private CoinDAO coinDAO;
-    private CoinDAO coinDAO2;
-    private CoinThemeDAO coinThemeDAO;
-    private CoinThemeDAO coinThemeDAO2;
-    private CoinTradeRecordDAO coinTradeRecordDAO;
-    private CoinTradeRecordDAO coinTradeRecordDAO2;
+    private CoinEntity coinDAO;
+    private CoinEntity coinDAO2;
+    private CoinThemeEntity coinThemeDAO;
+    private CoinThemeEntity coinThemeDAO2;
+    private CoinTradeRecordEntity coinTradeRecordDAO;
+    private CoinTradeRecordEntity coinTradeRecordDAO2;
 
     @BeforeEach
     void setUp() {
-        coinDAO = CoinDAO.builder()
+        coinDAO = CoinEntity.builder()
                 .coinName("KRW-BTC")
                 .build();
 
-        coinDAO2 = CoinDAO.builder()
+        coinDAO2 = CoinEntity.builder()
                 .coinName("KRW-ETH")
                 .build();
 
 
-        coinThemeDAO = CoinThemeDAO.builder()
+        coinThemeDAO = CoinThemeEntity.builder()
                 .coinDAO(coinDAO)
                 .coinCategory("bitcoin")
                 .build();
 
-        coinThemeDAO2 = CoinThemeDAO.builder()
+        coinThemeDAO2 = CoinThemeEntity.builder()
                 .coinDAO(coinDAO2)
                 .coinCategory("ethereum")
                 .build();
@@ -59,7 +59,7 @@ class CoinAccumVolumeRepositoryTest {
         coinThemeDAORepository.save(coinThemeDAO);
         coinThemeDAORepository.save(coinThemeDAO2);
 
-        coinTradeRecordDAO = CoinTradeRecordDAO.builder()
+        coinTradeRecordDAO = CoinTradeRecordEntity.builder()
                 .coinDAO(coinDAO)
                 .sequentialID("1632217069000003")
                 .tradeDate("2021-09-21")
@@ -76,7 +76,7 @@ class CoinAccumVolumeRepositoryTest {
                 .timestamp(1632217069340L)
                 .build();
 
-        coinTradeRecordDAO2 = CoinTradeRecordDAO.builder()
+        coinTradeRecordDAO2 = CoinTradeRecordEntity.builder()
                 .coinDAO(coinDAO2)
                 .sequentialID("1632217069000003")
                 .tradeDate("2021-09-21")
@@ -108,9 +108,9 @@ class CoinAccumVolumeRepositoryTest {
     @DisplayName("Query Test")
     void insertQueryTest(){
         coinAccumVolumeRepository.insertIntoCoinAccumVolume();
-        List<CoinAcuumVolumeDAO> coinAcuumVolumeDAOList = coinAccumVolumeRepository.findAll();
+        List<CoinAcuumVolumeEntity> coinAcuumVolumeDAOList = coinAccumVolumeRepository.findAll();
 
-        for(CoinAcuumVolumeDAO coinAcuumVolumeDAO : coinAcuumVolumeDAOList){
+        for(CoinAcuumVolumeEntity coinAcuumVolumeDAO : coinAcuumVolumeDAOList){
             System.out.println(coinAcuumVolumeDAO.getCoinDAO().getCoinName());
         }
     }
@@ -119,9 +119,9 @@ class CoinAccumVolumeRepositoryTest {
     @DisplayName("Query Join Fetch Test")
     void joinFetchQueryTest(){
         coinAccumVolumeRepository.insertIntoCoinAccumVolume();
-        List<CoinAcuumVolumeDAO> coinAcuumVolumeDAOList = coinAccumVolumeRepository.findAllWithFetch();
+        List<CoinAcuumVolumeEntity> coinAcuumVolumeDAOList = coinAccumVolumeRepository.findAllWithFetch();
 
-        for(CoinAcuumVolumeDAO coinAcuumVolumeDAO : coinAcuumVolumeDAOList){
+        for(CoinAcuumVolumeEntity coinAcuumVolumeDAO : coinAcuumVolumeDAOList){
             System.out.println(coinAcuumVolumeDAO.getCoinDAO().getCoinName());
         }
     }

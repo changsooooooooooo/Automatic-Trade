@@ -1,4 +1,4 @@
-package com.automatictrade.data.dao;
+package com.automatictrade.data.entity;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter
 @Entity(name = "coin_theme")
 @NoArgsConstructor
-public class CoinThemeDAO {
+public class CoinThemeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,13 +17,13 @@ public class CoinThemeDAO {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="coin_name")
-    private CoinDAO coinDAO;
+    private CoinEntity coinDAO;
 
     @Column(name="coin_category")
     private String coinCategory;
 
     @Builder
-    public CoinThemeDAO(CoinDAO coinDAO, String coinCategory){
+    public CoinThemeEntity(CoinEntity coinDAO, String coinCategory){
         this.coinDAO = coinDAO;
         this.coinCategory = coinCategory;
     }

@@ -1,4 +1,4 @@
-package com.automatictrade.data.dao;
+package com.automatictrade.data.entity;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Getter
-@Entity(name = "coin_close")
 @NoArgsConstructor
-public class CoinCloseDAO {
+@Entity(name = "coin_open")
+public class CoinOpenEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,18 +17,18 @@ public class CoinCloseDAO {
 
     @ManyToOne
     @JoinColumn(name="coin_name")
-    private CoinDAO coinDAO;
+    private CoinEntity coinDAO;
 
     @Column(name="time")
     private String time;
 
-    @Column(name="close")
-    private Double closePrice;
+    @Column(name="open")
+    private Double openPrice;
 
     @Builder
-    public CoinCloseDAO(CoinDAO coinDAO, String time, Double closePrice){
+    public CoinOpenEntity(CoinEntity coinDAO, String time, Double openPrice){
         this.coinDAO = coinDAO;
         this.time = time;
-        this.closePrice = closePrice;
+        this.openPrice = openPrice;
     }
 }

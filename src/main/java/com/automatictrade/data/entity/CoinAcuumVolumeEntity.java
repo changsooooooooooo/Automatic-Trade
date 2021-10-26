@@ -1,4 +1,4 @@
-package com.automatictrade.data.dao;
+package com.automatictrade.data.entity;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity(name = "coin_accum_volume")
-public class CoinAcuumVolumeDAO {
+public class CoinAcuumVolumeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +17,7 @@ public class CoinAcuumVolumeDAO {
 
     @ManyToOne(cascade=CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name="coin_name")
-    private CoinDAO coinDAO;
+    private CoinEntity coinDAO;
 
     @Column(name="time")
     private String time;
@@ -29,7 +29,7 @@ public class CoinAcuumVolumeDAO {
     private Double accumulateVolume;
 
     @Builder
-    public CoinAcuumVolumeDAO(CoinDAO coinDAO, String time, Double volume, Double accumulateVolume){
+    public CoinAcuumVolumeEntity(CoinEntity coinDAO, String time, Double volume, Double accumulateVolume){
         this.coinDAO = coinDAO;
         this.time = time;
         this.volume = volume;

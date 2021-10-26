@@ -1,12 +1,12 @@
 package com.automatictrade.repository;
 
-import com.automatictrade.data.dao.CoinCloseDAO;
+import com.automatictrade.data.entity.CoinCloseEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CoinCloseRepository extends JpaRepository<CoinCloseDAO, Long> {
+public interface CoinCloseRepository extends JpaRepository<CoinCloseEntity, Long> {
 
     @Query(value="insert into coin_close (coin_name, time, close)\n" +
             "select t.coin_name,\n" +

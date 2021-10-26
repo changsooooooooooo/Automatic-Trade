@@ -1,12 +1,12 @@
 package com.automatictrade.repository;
 
-import com.automatictrade.data.dao.CoinMinMaxDAO;
+import com.automatictrade.data.entity.CoinMinMaxEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CoinMinMaxRepository extends JpaRepository<CoinMinMaxDAO, Long> {
+public interface CoinMinMaxRepository extends JpaRepository<CoinMinMaxEntity, Long> {
 
     @Query(value = "insert into coin_min_max\n" +
             "select coin_name,\n" +

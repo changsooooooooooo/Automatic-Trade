@@ -1,4 +1,4 @@
-package com.automatictrade.data.dao;
+package com.automatictrade.data.entity;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @Getter
 @NoArgsConstructor
 @Entity(name = "coin_train")
-public class CoinTrainDAO {
+public class CoinTrainEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,7 +18,7 @@ public class CoinTrainDAO {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="coin_name")
-    private CoinDAO coinDAO;
+    private CoinEntity coinDAO;
 
     @Column(name="time")
     private Timestamp time;
@@ -39,8 +39,8 @@ public class CoinTrainDAO {
     private Double vwap;
 
     @Builder
-    public CoinTrainDAO(CoinDAO coinDAO, Timestamp time, Double openingPrice, Double highPrice, Double lowPrice,
-                        Double closingPrice, Double vwap) {
+    public CoinTrainEntity(CoinEntity coinDAO, Timestamp time, Double openingPrice, Double highPrice, Double lowPrice,
+                           Double closingPrice, Double vwap) {
         this.coinDAO = coinDAO;
         this.time = time;
         this.openingPrice = openingPrice;

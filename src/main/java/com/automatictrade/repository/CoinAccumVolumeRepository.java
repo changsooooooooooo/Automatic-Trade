@@ -1,17 +1,15 @@
 package com.automatictrade.repository;
 
-import com.automatictrade.data.dao.CoinAcuumVolumeDAO;
-import com.automatictrade.data.dao.CoinDAO;
+import com.automatictrade.data.entity.CoinAcuumVolumeEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
-public interface CoinAccumVolumeRepository extends JpaRepository<CoinAcuumVolumeDAO, Long> {
+public interface CoinAccumVolumeRepository extends JpaRepository<CoinAcuumVolumeEntity, Long> {
 
     @Modifying(clearAutomatically = true)
     @Query(value="insert into coin_accum_volume (coin_name, time, volume, accumulate_volume)\n" +
@@ -27,5 +25,5 @@ public interface CoinAccumVolumeRepository extends JpaRepository<CoinAcuumVolume
     void insertIntoCoinAccumVolume();
 
     @Query(value = "select av from coin_accum_volume av join fetch av.coinDAO")
-    List<CoinAcuumVolumeDAO> findAllWithFetch();
+    List<CoinAcuumVolumeEntity> findAllWithFetch();
 }

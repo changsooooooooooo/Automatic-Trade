@@ -1,4 +1,4 @@
-package com.automatictrade.data.dao;
+package com.automatictrade.data.entity;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity(name = "coin_min_max")
-public class CoinMinMaxDAO {
+public class CoinMinMaxEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +17,7 @@ public class CoinMinMaxDAO {
 
     @ManyToOne
     @JoinColumn(name="coin_name")
-    private CoinDAO coinDAO;
+    private CoinEntity coinDAO;
 
     @Column(name="time")
     private String time;
@@ -29,7 +29,7 @@ public class CoinMinMaxDAO {
     private Double highPrice;
 
     @Builder
-    public CoinMinMaxDAO(CoinDAO coinDAO, String time, Double minPrice, Double highPrice){
+    public CoinMinMaxEntity(CoinEntity coinDAO, String time, Double minPrice, Double highPrice){
         this.coinDAO = coinDAO;
         this.time = time;
         this.minPrice = minPrice;

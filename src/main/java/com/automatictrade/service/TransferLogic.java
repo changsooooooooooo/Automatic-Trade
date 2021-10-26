@@ -3,7 +3,7 @@ package com.automatictrade.service;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.S3Object;
 import com.automatictrade.config.AWSS3Config;
-import com.automatictrade.data.dao.CoinTradeRecordDAO;
+import com.automatictrade.data.entity.CoinTradeRecordEntity;
 import com.automatictrade.exceptions.FunctionWithException;
 import com.automatictrade.exceptions.ServiceLogicException;
 import com.automatictrade.repository.CoinTradeDBRepository;
@@ -53,8 +53,8 @@ public class TransferLogic {
         s3ObjList.stream()
                 .map(wrapper(s3Obj-> StreamUtils.copyToString(s3Obj.getObjectContent(), StandardCharsets.UTF_8)))
                 .filter(str->0<str.length()&&str.getClass().equals(String.class))
-                .map(wrapper(str->mapper.readValue(str, CoinTradeRecordDAO.class)))
-                .filter(dto->dto.getClass().equals(CoinTradeRecordDAO.class))
+                .map(wrapper(str->mapper.readValue(str, CoinTradeRecordEntity.class)))
+                .filter(dto->dto.getClass().equals(CoinTradeRecordEntity.class))
                 .forEach(dto->coinTradeDBRepository.save(dto));
     }
 
